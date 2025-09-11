@@ -1,17 +1,15 @@
 // Sinha Productions
-// FrontendUISubsystems.cpp
-//
-// Description:
-//   Subsystem responsible for managing frontend UI stacks and asynchronous
-//   creation/pushing of activatable widgets into the primary layout's widget stacks.
-//   Contains helpers to register the primary layout and to push soft-referenced
-//   widget classes asynchronously while reporting progress through callbacks.
+
+
 
 #include "Subsystems/FrontendUISubsystems.h"
 #include "FrontendDebugHelper.h"
 #include "Engine/AssetManager.h"
 #include "Widgets/CommonActivatableWidgetContainer.h"
 #include "GameplayTagContainer.h"
+#include "FrontedGameplayTags.h"
+#include "FrontendFunctionLibrary.h"
+#include "Widgets/Widget_ConfirmSCreen.h"
 #include "Widgets/Widget_PrimaryLayout.h"
 
 // Retrieve the singleton instance of this subsystem from any UObject context.
@@ -129,6 +127,52 @@ void UFrontendUISubsystems::PushSoftWidgetToStackAsync(
             }
 
         )
+
+    );
+
+}
+
+void UFrontendUISubsystems::PushConfirmScreenToModalAsync(EConfirmScreenType InScreenType, const FText& InScreenTitle, const FText& InScrenMessage, TFunction<void(EConfirmScreenButtonType)> ButtonClickedCallback)
+{
+    UConfirmScreenInfoObject* CreatedInfoObject = nullptr;
+
+    switch (InScreenType)
+    {
+
+    case EConfirmScreenType::Okay:
+        CreatedInfoObject = UConfirmScreenInfoObject::CreateOKScreen(InScreenTitle, InScrenMessage);
+        break;
+
+    case EConfirmScreenType::YesNo:
+        CreatedInfoObject = UConfirmScreenInfoObject::CreateYesNoScreen(InScreenTitle, InScrenMessage);
+        break;
+
+    case EConfirmScreenType::OKCancel:
+        CreatedInfoObject = UConfirmScreenInfoObject::CreateCancelScreen(InScreenTitle, InScrenMessage);
+        break;
+
+    case EConfirmScreenType::Unknown:
+        break;
+
+    default:
+        break;
+
+    }
+
+    check(CreatedInfoObject);
+
+    PushSoftWidgetToStackAsync(
+
+        FrontendGameplayTags::Frontend_WidgetStack_Modal,
+        UFrontendFunctionLibrary::GetFrontednSoftWidgetClassByTag(FrontendGameplayTags::Frontend_Widgets_ConfirmScreen),
+        [CreatedInfoObject,ButtonClickedCallback](EAsyncPushWidgetState InPushState, UWidget_ActivatableBase* PushedWidget)
+        {
+            if (InPushState == EAsyncPushWidgetState::OnCreatedBeforePush)
+            {
+                UWidget_ConfirmScreen* CreatedCastChecked = CastChecked<UWidget_ConfirmScreen>(PushedWidget);
+                CreatedCastChecked->InitConfirmScreen(CreatedInfoObject, ButtonClickedCallback);
+            }
+        }
 
     );
 

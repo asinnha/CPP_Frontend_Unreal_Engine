@@ -8,7 +8,7 @@ public class UnrealTutorial : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "GameplayTags", "UMG", "CommonUI"});
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "GameplayTags", "UMG", "CommonUI", "CommonInput"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

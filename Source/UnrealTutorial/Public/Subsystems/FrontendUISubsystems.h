@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FrontendTypes/FrontendEnumTypes.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "Widgets/Widget_ActivatableBase.h"
 #include "Delegates/DelegateCombinations.h"
@@ -40,6 +41,8 @@ public:
 	void RegisterCreatedPrimaryLayout(UWidget_PrimaryLayout* InCreatedWidget);
 
 	void PushSoftWidgetToStackAsync(const FGameplayTag& InWidgetStackTag, TSoftClassPtr<UWidget_ActivatableBase> InSoftWidgetClass, TFunction<void(EAsyncPushWidgetState,UWidget_ActivatableBase*)> AsyncPushStateCallback);
+
+	void PushConfirmScreenToModalAsync(EConfirmScreenType InScreenType, const FText& InScreenTitle, const FText& InScrenMessage, TFunction<void(EConfirmScreenButtonType)> ButtonClickedCallback);
 
 	UPROPERTY(BlueprintAssignable)
 	FOnButtonDescriptionTextUpdateDelegate OnButtonDescriptionTextUpdated;

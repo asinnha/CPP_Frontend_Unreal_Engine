@@ -15,4 +15,6 @@ namespace FrontendGameplayTags
 	//Game Widget Tags
 	UNREALTUTORIAL_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_Widgets_PressAnyKey);
 	UNREALTUTORIAL_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_Widgets_MainMenu);
+	UNREALTUTORIAL_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Frontend_Widgets_ConfirmScreen);
+
 }

@@ -12,5 +12,6 @@ namespace FrontendGameplayTags {
 
 	UE_DEFINE_GAMEPLAY_TAG(Frontend_Widgets_PressAnyKey, "Frontend.Widgets.PressAnyKey");
 	UE_DEFINE_GAMEPLAY_TAG(Frontend_Widgets_MainMenu, "Frontend.Widgets.MainMenu");
+	UE_DEFINE_GAMEPLAY_TAG(Frontend_Widgets_ConfirmScreen, "Frontend.Widgets.ConfirmScreen");
 }
 
